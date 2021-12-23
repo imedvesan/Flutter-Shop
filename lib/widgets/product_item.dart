@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../providers/product.dart';
+
 import '../screens/product_detail_screen.dart';
-import '../providers//cart.dart';
+import '../providers/product.dart';
+import '../providers/cart.dart';
 
 class ProductItem extends StatelessWidget {
   // final String id;
@@ -20,8 +21,10 @@ class ProductItem extends StatelessWidget {
       child: GridTile(
         child: GestureDetector(
           onTap: () {
-            Navigator.of(context).pushNamed(ProductDetailScreen.routeName,
-                arguments: product.id);
+            Navigator.of(context).pushNamed(
+              ProductDetailScreen.routeName,
+              arguments: product.id,
+            );
           },
           child: Image.network(
             product.imageUrl,
@@ -33,8 +36,9 @@ class ProductItem extends StatelessWidget {
           leading: Consumer<Product>(
             builder: (ctx, product, _) => IconButton(
               icon: Icon(
-                  product.isFavorite ? Icons.favorite : Icons.favorite_border),
-              color: Theme.of(context).colorScheme.secondary,
+                product.isFavorite ? Icons.favorite : Icons.favorite_border,
+              ),
+              color: Theme.of(context).accentColor,
               onPressed: () {
                 product.toggleFavoriteStatus();
               },
@@ -45,11 +49,13 @@ class ProductItem extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           trailing: IconButton(
-            icon: Icon(Icons.shopping_cart),
-            color: Theme.of(context).colorScheme.secondary,
+            icon: Icon(
+              Icons.shopping_cart,
+            ),
             onPressed: () {
               cart.addItem(product.id, product.price, product.title);
             },
+            color: Theme.of(context).accentColor,
           ),
         ),
       ),
